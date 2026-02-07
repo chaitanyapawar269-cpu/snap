@@ -3,147 +3,233 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Will You Be My Girlfriend?</title>
+    <title>Valentine's Date Proposal for Chaturthi</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
-            text-align: center;
-            background-color: #f0f0f0;
-            padding: 50px;
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #ff9a9e, #fecfef, #ffecd2);
+            color: #333;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+            position: relative;
         }
         .container {
-            max-width: 600px;
-            margin: 0 auto;
-            background: white;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            text-align: center;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            max-width: 500px;
+            position: relative;
+            z-index: 1;
+            animation: fadeIn 2s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.8); }
+            to { opacity: 1; transform: scale(1); }
         }
         h1 {
-            color: #333;
+            font-size: 2.5em;
+            color: #e91e63;
+            margin-bottom: 20px;
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        p {
+            font-size: 1.2em;
+            margin-bottom: 30px;
         }
         .buttons {
-            margin-top: 20px;
+            display: flex;
+            justify-content: center;
+            gap: 50px;
+            margin-bottom: 20px;
         }
         button {
-            padding: 10px 20px;
-            font-size: 18px;
-            margin: 10px;
+            padding: 15px 30px;
+            font-size: 1.2em;
             border: none;
-            border-radius: 5px;
+            border-radius: 10px;
             cursor: pointer;
-            transition: all 0.3s;
+            transition: all 0.3s ease;
+            min-width: 120px;
         }
-        #yesBtn {
-            background-color: #4CAF50;
+        .yes {
+            background: #4caf50;
             color: white;
+            animation: glow 2s infinite;
         }
-        #noBtn {
-            background-color: #f44336;
+        @keyframes glow {
+            0% { box-shadow: 0 0 5px #4caf50; }
+            50% { box-shadow: 0 0 20px #4caf50; }
+            100% { box-shadow: 0 0 5px #4caf50; }
+        }
+        .yes:hover {
+            background: #45a049;
+            transform: scale(1.1);
+        }
+        .no {
+            background: #f44336;
             color: white;
             position: relative;
         }
-        #message {
-            margin-top: 20px;
-            font-size: 16px;
-            color: #555;
+        .no:hover {
+            background: #d32f2f;
+            transform: scale(1.05);
         }
-        .memories {
-            display: none;
+        .message {
+            font-size: 1.5em;
+            color: #e91e63;
             margin-top: 20px;
+            animation: slideIn 1s ease-in-out;
         }
-        .memory {
-            background: #e7f3ff;
-            padding: 10px;
-            margin: 5px 0;
-            border-radius: 5px;
+        @keyframes slideIn {
+            from { transform: translateY(20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        .hearts {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+        .heart {
+            position: absolute;
+            color: #ff6b9d;
+            font-size: 2em;
+            animation: float 6s infinite linear;
+        }
+        @keyframes float {
+            0% { transform: translateY(100vh) rotate(0deg); }
+            100% { transform: translateY(-100vh) rotate(360deg); }
+        }
+        .fireworks {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+        .firework {
+            position: absolute;
+            width: 5px;
+            height: 5px;
+            background: #ffeb3b;
+            border-radius: 50%;
+            animation: burst 2s infinite ease-in-out;
+        }
+        @keyframes burst {
+            0% { transform: scale(0) translateY(0); opacity: 1; }
+            50% { transform: scale(1) translateY(-50px); opacity: 0.8; }
+            100% { transform: scale(0) translateY(-100px); opacity: 0; }
         }
     </style>
 </head>
 <body>
+    <div class="hearts" id="hearts"></div>
+    <div class="fireworks" id="fireworks"></div>
     <div class="container">
-        <h1>Vedanti, Will You Be in a Relationship with Me?</h1>
+        <h1>Will You Be My Date on 14th Feb, Chaturthi?</h1>
+        <p>Hey Chaturthi,  Will you make this Valentine's Day special by going on a date with me? I promise it'll be unforgettable! ❤️</p>
         <div class="buttons">
-            <button id="yesBtn">Yes</button>
-            <button id="noBtn">No</button>
+            <button class="yes" onclick="respond('yes')">Yes</button>
+            <button class="no" id="noButton" onclick="handleNo()">No</button>
         </div>
-        <div id="message"></div>
-        <div class="memories" id="memories">
-            <p>Remember our beautiful memories?</p>
-            <div class="memory">That time we laughed until we cried at the park.</div>
-            <div class="memory">Our late-night talks under the stars.</div>
-            <div class="memory">The surprise picnic I planned just for you.</div>
-            <div class="memory">Dancing in the rain like no one was watching.</div>
-            <div class="memory">All the inside jokes that make us smile.</div>
-            <p>These moments mean everything to me. Please reconsider? 💕</p>
-        </div>
+        <div class="message" id="message"></div>
     </div>
 
     <script>
-        const yesBtn = document.getElementById('yesBtn');
-        const noBtn = document.getElementById('noBtn');
-        const message = document.getElementById('message');
-        const memories = document.getElementById('memories');
-
         let noClickCount = 0;
-        const memoriesList = [
-            "That time we laughed until we cried at the park.",
-            "Our late-night talks under the stars.",
-            "The surprise picnic I planned just for you.",
-            "Dancing in the rain like no one was watching.",
-            "All the inside jokes that make us smile."
+        const messages = [
+            "Come on, say yes! 😊",
+            "Really? Think again! 😉",
+            "My heart can't take this! 😢",
+            "Please, just click yes! 💪❤️",
+            "i know youu also think about me❤️, so just click on yesss!!!! "
         ];
 
-        yesBtn.addEventListener('click', () => {
-            message.innerHTML = "<h2>Yay! I knew you'd say yes! Let's make more beautiful memories together. ❤️</h2>";
-            memories.style.display = 'none';
-            // To "get her response back", you could add code here to send to a server, e.g., via fetch to an API.
-            // For now, it's just displayed. Replace with your backend endpoint if needed.
-            console.log("Response: Yes");
-        });
-
-        noBtn.addEventListener('click', () => {
-            noClickCount++;
-            if (noClickCount === 1) {
-                message.innerHTML = "<p>Are you sure? Think about it again...</p>";
-                memories.style.display = 'block';
-            } else if (noClickCount === 2) {
-                message.innerHTML = "<p>Please, Vedanti, our memories are too special to ignore. Say yes!</p>";
-            } else if (noClickCount === 3) {
-                message.innerHTML = "<p>One more chance? I promise to make you even happier!</p>";
-            } else {
-                message.innerHTML = "<p>Okay, I respect your decision, but I'll always cherish our time together. 😊</p>";
-                noBtn.style.display = 'none'; // Hide after persistent no
+        function respond(answer) {
+            const messageDiv = document.getElementById('message');
+            const noButton = document.getElementById('noButton');
+            if (answer === 'yes') {
+                messageDiv.innerHTML = "Yeah mala mahit hot tu nhi ny bolnar chal mg apan apla plan karuu ??? thank youu so much for saying yes to my propsal Chaturthi! ❤️";
+                noButton.style.display = 'none';
+                createFireworks(50);
+                createHearts(50);
             }
+        }
 
-            // Shift the No button to a random position
+        function handleNo() {
+            const noButton = document.getElementById('noButton');
+            const messageDiv = document.getElementById('message');
+            messageDiv.innerHTML = messages[noClickCount % messages.length];
+            // Make it harder to click no by moving it
+            shiftNoButton();
+            noClickCount++;
+            if (noClickCount > 5) {
+                // After a few tries, make it even harder or force yes
+                noButton.style.display = 'none';
+                messageDiv.innerHTML = "okay now there is NO button for saying NO so please click on yesss ❤️";
+            }
+        }
+
+        function shiftNoButton() {
+            const noButton = document.getElementById('noButton');
             const container = document.querySelector('.container');
             const containerRect = container.getBoundingClientRect();
-            const btnWidth = noBtn.offsetWidth;
-            const btnHeight = noBtn.offsetHeight;
-            const maxX = containerRect.width - btnWidth;
-            const maxY = containerRect.height - btnHeight - 100; // Leave space for other elements
+            let top, left;
+            do {
+                top = Math.random() * (window.innerHeight - 100) + 50;
+                left = Math.random() * (window.innerWidth - 150) + 50;
+            } while (
+                top > containerRect.top - 50 && top < containerRect.bottom + 50 &&
+                left > containerRect.left - 50 && left < containerRect.right + 50
+            );
+            noButton.style.position = 'fixed';
+            noButton.style.top = top + 'px';
+            noButton.style.left = left + 'px';
+        }
 
-            const randomX = Math.random() * maxX;
-            const randomY = Math.random() * maxY;
-
-            noBtn.style.position = 'absolute';
-            noBtn.style.left = randomX + 'px';
-            noBtn.style.top = randomY + 'px';
-
-            // Add a random memory if not all shown
-            if (noClickCount <= memoriesList.length) {
-                const memoryDivs = document.querySelectorAll('.memory');
-                if (memoryDivs.length < memoriesList.length) {
-                    const newMemory = document.createElement('div');
-                    newMemory.className = 'memory';
-                    newMemory.textContent = memoriesList[noClickCount - 1];
-                    memories.appendChild(newMemory);
-                }
+        function createHearts(count = 20) {
+            const heartsContainer = document.getElementById('hearts');
+            for (let i = 0; i < count; i++) {
+                const heart = document.createElement('div');
+                heart.className = 'heart';
+                heart.innerHTML = '❤️';
+                heart.style.left = Math.random() * 100 + '%';
+                heart.style.animationDelay = Math.random() * 6 + 's';
+                heartsContainer.appendChild(heart);
             }
+        }
 
-            console.log("Response: No (attempt " + noClickCount + ")");
-        });
+        function createFireworks(count = 20) {
+            const fireworksContainer = document.getElementById('fireworks');
+            for (let i = 0; i < count; i++) {
+                const firework = document.createElement('div');
+                firework.className = 'firework';
+                firework.style.left = Math.random() * 100 + '%';
+                firework.style.animationDelay = Math.random() * 2 + 's';
+                fireworksContainer.appendChild(firework);
+                setTimeout(() => firework.remove(), 2000);
+            }
+        }
+
+        createHearts();
+        createFireworks();
     </script>
 </body>
 </html>
